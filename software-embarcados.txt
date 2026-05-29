@@ -1,0 +1,53 @@
+DOCUMENTAÇÃO TÉCNICA DO SOFTWARE: SISTEMA EMBARCADO DE CONTROLE DE TRÁFEGO
+================================================================================
+
+Este documento descreve detalhadamente a arquitetura de software desenvolvida para o dispositivo de monitoramento de tráfego, abrangendo desde o firmware rodando no microcontrolador (ESP32) até a infraestrutura de rede, mensageria (MQTT) e interface de visualização (Dashboard).
+
+---
+
+1. FIRMWARE DO DISPOSITIVO (ESP32)
+----------------------------------
+O firmware foi desenvolvido em C/C++ utilizando o framework Arduino e gerenciado via PlatformIO. O coração do sistema é uma "Máquina de Estados Finita" que garante confiabilidade na medição e calibração dos sensores sem bloqueios de processamento.
+
+Sensores e Entradas:
+- Sensor MAP (Pressão): Lê o sinal analógico que indica a pressão exercida na via.
+- Potenciômetro: Usado para calibrar a margem de disparo (Threshold) que contabiliza os eixos.
+
+Máquina de Estados:
+- INIT: Inicialização do hardware (LEDs, SD Card, Watchdog Timer).
+- AGUARDANDO_PRESSAO: Aguarda os níveis de tensão do sensor MAP entrarem em uma faixa operacional válida (VMIN a VMAX).
+- ESTAVEL: Valida se o sinal do sensor de pressão se manteve estável por tempo suficiente.
+- COLETA_MEDIA: Período onde o ESP32 coleta amostras do sensor para calcular uma Pressão Média Base (PMedia).
+- OPERACAO: Estado final. Aqui o sistema compara ativamente a pressão atual com o limiar de disparo (Threshold X = PMedia + Fator). Se a pressão ultrapassar a histerese calculada, o evento de "EIXO (AXLE)" é registrado.
+
+Segurança e Redundância (Data Logging):
+- SD Card: Todos os eventos críticos, recalibrações e medições por segundo são salvos em um arquivo CSV local via barramento SPI, garantindo que nenhum dado seja perdido caso a rede falhe.
+- Watchdog Timer (WDT): Reinicia o ESP32 automaticamente em caso de travamentos.
+
+
+2. MENSAGERIA E COMUNICAÇÃO (MQTT)
+----------------------------------
+A modernização do sistema embarcado incluiu a integração de uma camada de comunicação em tempo real via WiFi e protocolo MQTT (Message Queuing Telemetry Transport), o padrão da indústria para Internet das Coisas (IoT).
+
+- PubSubClient: Biblioteca utilizada no ESP32 para se manter conectado ao Broker.
+- Payload JSON: Quando ocorrem eventos críticos (Registro de Eixo, Recalibração de Média ou amostragem por tempo), o ESP32 envia as informações de forma estruturada. 
+  Exemplo do pacote transmitido:
+  {"estado":"OPERACAO", "pressaoV": 2.15, "pmedia": 2.10, "potV": 1.5, "potN": 0.45, "x": 2.18, "eixos": 14, "evento": "AXLE"}
+- Tópico MQTT: Todos os dados trafegam através do tópico "esp32/trafego/dados".
+
+
+3. INFRAESTRUTURA DE SERVIDORES (DOCKER)
+----------------------------------------
+Para hospedar o tráfego de rede, o sistema dispensa nuvens externas e roda 100% localmente com latência próxima a zero, encapsulado em containers Docker.
+
+- Eclipse Mosquitto (Broker MQTT): Atua como o servidor central de mensagens. Ele recebe as publicações do ESP32 (na porta 1883) e as distribui para todos os dispositivos inscritos. Ele também opera na porta 9001 (WebSockets) para se comunicar diretamente com navegadores web.
+- Node-RED: Ambiente de programação visual baseado em fluxos (flow-based) rodando na porta 1880. Ele está inscrito no Broker MQTT e permite a depuração visual dos pacotes JSON do ESP32 e a futura criação de integrações (como salvar em Banco de Dados, disparar alertas, etc).
+
+
+4. INTERFACE DO USUÁRIO (DASHBOARD WEB)
+---------------------------------------
+Para a visualização do tráfego pelos operadores, desenvolvemos um Dashboard moderno do zero e independente.
+
+- Stack Tecnológica: Criado com Vite (Vanilla JavaScript, HTML5, CSS3).
+- Comunicação Direta: O painel web utiliza a biblioteca 'mqtt.js' para estabelecer um WebSocket direto com o Broker Mosquitto. Isso dispensa o uso de backends intermediários (API REST) para receber os dados.
+- UI/UX Dinâmica: A interface segue heurísticas avançadas de design ("Glassmorphism", Dark Mode). A tela foi desenhada para ter foco total na telemetria de pressão: o valor exato da voltagem (V) atual fica fixado de forma proeminente no canto superior direito, enquanto o restante da tela é preenchido por um gráfico dinâmico (Chart.js) que plota o histórico da pressão no eixo Y em relação ao tempo no eixo X, garantindo monitoramento contínuo em tempo real absoluto e alta performance.

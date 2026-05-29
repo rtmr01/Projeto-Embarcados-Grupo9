@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ESP32 Pressão de Tráfego</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="app-container">
+      <header>
+        <div class="header-left">
+          <h1>Monitoramento de Pressão</h1>
+          <div class="status-indicator">
+            <div class="dot" id="mqtt-status-dot"></div>
+            <span id="mqtt-status-text">Conectando...</span>
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="pressure-display">
+            <span class="pressure-value" id="val-pressao">0.000</span>
+            <span class="pressure-unit">V</span>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <div class="glass-card chart-container">
+          <canvas id="pressureChart"></canvas>
+        </div>
+      </main>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
