@@ -9,6 +9,20 @@ const statusDot = document.getElementById('mqtt-status-dot')
 const statusText = document.getElementById('mqtt-status-text')
 const elPressao = document.getElementById('val-pressao')
 
+// Função para converter Tensão (V) para Pressão (kPa)
+// Ajuste os valores VMIN, VMAX, PMIN, PMAX conforme o datasheet do sensor MAP do Gol Mi
+function voltageToPressure(v) {
+  const VMIN = 0.4;   // Tensão mínima típica (V)
+  const VMAX = 4.65;  // Tensão máxima típica (V)
+  const PMIN = 10.0;  // Pressão mínima (kPa)
+  const PMAX = 115.0; // Pressão máxima (kPa)
+  
+  // Limita a tensão aos valores min/max para evitar valores absurdos
+  const constrainedV = Math.max(VMIN, Math.min(v, VMAX));
+  
+  return ((constrainedV - VMIN) * (PMAX - PMIN) / (VMAX - VMIN)) + PMIN;
+}
+
 // Configuração do Gráfico
 const ctx = document.getElementById('pressureChart').getContext('2d')
 
@@ -23,7 +37,7 @@ const chartConfig = {
   data: {
     labels: [],
     datasets: [{
-      label: 'Pressão (V)',
+      label: 'Pressão (kPa)',
       data: [],
       borderColor: '#3b82f6',
       backgroundColor: gradient,
@@ -111,8 +125,10 @@ client.on('message', (topic, message) => {
     const data = JSON.parse(message.toString())
     
     if (data.pressaoV !== undefined) {
+      const pressaoKpa = voltageToPressure(data.pressaoV);
+
       // Atualiza o texto do canto superior direito
-      elPressao.innerText = data.pressaoV.toFixed(3)
+      elPressao.innerText = pressaoKpa.toFixed(1)
       
       // Atualiza o Gráfico
       const now = new Date()
@@ -121,7 +137,7 @@ client.on('message', (topic, message) => {
                       now.getSeconds().toString().padStart(2, '0')
       
       pressureChart.data.labels.push(timeStr)
-      pressureChart.data.datasets[0].data.push(data.pressaoV)
+      pressureChart.data.datasets[0].data.push(pressaoKpa)
       
       // Mantém apenas os últimos pontos no gráfico
       if (pressureChart.data.labels.length > MAX_DATA_POINTS) {
