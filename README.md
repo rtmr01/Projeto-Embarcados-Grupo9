@@ -2,7 +2,7 @@
 
 Este repositório contém a arquitetura completa de software desenvolvida para um dispositivo de monitoramento de tráfego, abrangendo desde o firmware do microcontrolador até a infraestrutura de rede e dashboard web.
 
-## 📁 Estrutura do Projeto
+##  Estrutura do Projeto
 
 O projeto é dividido em 3 camadas principais:
 
