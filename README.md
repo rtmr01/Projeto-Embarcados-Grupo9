@@ -1,4 +1,4 @@
-# 🚦 Sistema Embarcado de Controle de Tráfego - ESP32
+#  Sistema Embarcado de Controle de Tráfego - ESP32
 
 Este repositório contém a arquitetura completa de software desenvolvida para um dispositivo de monitoramento de tráfego, abrangendo desde o firmware do microcontrolador até a infraestrutura de rede e dashboard web.
 
@@ -12,7 +12,7 @@ O projeto é dividido em 3 camadas principais:
 
 ---
 
-## 1. 🧠 Firmware do Dispositivo (ESP32)
+## 1.  Firmware do Dispositivo (ESP32)
 
 O coração do sistema embarcado opera baseado em uma **Máquina de Estados Finita** para não bloquear o processamento e garantir precisão:
 
@@ -31,7 +31,7 @@ O coração do sistema embarcado opera baseado em uma **Máquina de Estados Fini
 
 ---
 
-## 2. 📡 Mensageria e Comunicação (MQTT)
+## 2.  Mensageria e Comunicação (MQTT)
 
 A conectividade do sistema (IoT) é feita via WiFi utilizando o protocolo MQTT. O ESP32 usa a biblioteca `PubSubClient` para conexão.
 
@@ -43,7 +43,7 @@ A conectividade do sistema (IoT) é feita via WiFi utilizando o protocolo MQTT. 
 
 ---
 
-## 3. 🐳 Infraestrutura de Servidores (Docker)
+## 3.  Infraestrutura de Servidores (Docker)
 
 O sistema roda de forma 100% local com latência mínima utilizando containers gerenciados pelo Docker Compose.
 
@@ -52,7 +52,7 @@ O sistema roda de forma 100% local com latência mínima utilizando containers g
 
 ---
 
-## 4. 📊 Interface do Usuário (Dashboard Web)
+## 4.  Interface do Usuário (Dashboard Web)
 
 Painel desenvolvido do zero para monitoramento por operadores, focado em clareza e alta performance.
 
@@ -62,3 +62,16 @@ Painel desenvolvido do zero para monitoramento por operadores, focado em clareza
   - Estética baseada em *Glassmorphism* e Dark Mode.
   - Placa fixa para leitura isolada do valor da voltagem atual do sensor.
   - Gráfico dinâmico construído com **Chart.js**, plotando a Pressão no Eixo Y em função do tempo no Eixo X, de forma contínua e em tempo real.
+ 
+  ## 5.  Imagens do protótipo físico
+  
+<img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/d636d5c7-a94a-4a39-aa3d-e4bbae1ea815" />
+<img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/834cb2cd-8527-4693-a82b-915e5a73bd7f" />
+<img width="1600" height="1200" alt="image" src="https://github.com/user-attachments/assets/24e03324-e211-40c1-9953-756fb1af6e52" />
+<img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/3b147bb1-6e11-4f4a-be9e-a43514ca0d5b" />
+<img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/5a93ccf5-66bf-4c2a-9c54-36947d75f0f0" />
+<img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/ea3bee1b-3fad-4be8-8566-014ed5fa2755" />
+<img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/9d19d644-72cf-4d7f-a380-1aef0db15a05" />
+
+
+
