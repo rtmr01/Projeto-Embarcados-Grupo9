@@ -1,6 +1,6 @@
 #  Sistema Embarcado de Controle de Tráfego - ESP32
 
-[📄 Clique aqui para ler o Relatório Técnico Completo em PDF](./docs/Relatorio_Tecnico.pdf)
+[📄 Clique aqui para ler o Relatório Técnico Completo em PDF](./docs/Projeto_Embarcados_Grupo9.pdf)
 
 Este repositório contém a arquitetura completa de software desenvolvida para um dispositivo de monitoramento de tráfego, abrangendo desde o firmware do microcontrolador até a infraestrutura de rede e dashboard web.
 
