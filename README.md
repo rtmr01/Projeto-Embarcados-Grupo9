@@ -6,9 +6,11 @@ Este repositório contém a arquitetura completa de software desenvolvida para u
 
 O projeto é dividido em 3 camadas principais:
 
-- `/src`, `/include`, `/lib`: **Firmware (ESP32)** desenvolvido em C/C++ usando o framework Arduino (PlatformIO).
-- `/server`: **Infraestrutura Docker** rodando Eclipse Mosquitto (Broker MQTT) e Node-RED localmente.
-- `/dashboard`: **Interface Web (Vite)** para visualização da telemetria e gráficos em tempo real.
+- `/esp32-esp8266`: **Firmware (ESP32)** desenvolvido em C/C++ usando o framework Arduino (PlatformIO).
+- `/applications/server`: **Infraestrutura Docker** rodando Eclipse Mosquitto (Broker MQTT) e Node-RED localmente.
+- `/applications/dashboard`: **Interface Web (Vite)** para visualização da telemetria e gráficos em tempo real.
+- `/docs`: Documentações do projeto (ex: relatórios).
+- `/schematics`: Diagramas e esquemáticos dos circuitos físicos.
 
 ---
 
