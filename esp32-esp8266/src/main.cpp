@@ -28,11 +28,13 @@ d35
 
 #define WDT_TIMEOUT 5  // segundos
 
-const char* WIFI_SSID = "uaifai-tiradentes";
-const char* WIFI_PASSWORD = "bemvindoaocesar";
-const char* MQTT_SERVER = "172.26.70.113";
-const int MQTT_PORT = 1883;
-const char* MQTT_TOPIC = "esp32/trafego/dados";
+#include "config.h"
+
+const char* WIFI_SSID = CONFIG_WIFI_SSID;
+const char* WIFI_PASSWORD = CONFIG_WIFI_PASSWORD;
+const char* MQTT_SERVER = CONFIG_MQTT_SERVER;
+const int MQTT_PORT = CONFIG_MQTT_PORT;
+const char* MQTT_TOPIC = CONFIG_MQTT_TOPIC;
 
 WiFiClient espClient;
 PubSubClient mqttClient(espClient);

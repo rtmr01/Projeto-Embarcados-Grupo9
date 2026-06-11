@@ -31,6 +31,18 @@ O coração do sistema embarcado opera baseado em uma **Máquina de Estados Fini
   - **SD Card:** Backup local em arquivo CSV (barramento SPI) contra falhas de rede.
   - **Watchdog Timer (WDT):** Reinicialização automática de segurança contra travamentos.
 
+### ⚙️ Como configurar a Rede (Wi-Fi e MQTT)
+
+Caso você mude de ambiente (ex: da faculdade para casa), é necessário atualizar as credenciais do Wi-Fi e o IP do servidor MQTT para que a placa consiga se conectar.
+Para facilitar, as variáveis de rede foram isoladas no arquivo `esp32-esp8266/src/config.h`. 
+
+Basta abrir esse arquivo, atualizar os dados e fazer um novo upload para a placa ESP32:
+```cpp
+#define CONFIG_WIFI_SSID      "SEU_WIFI"
+#define CONFIG_WIFI_PASSWORD  "SUA_SENHA"
+#define CONFIG_MQTT_SERVER    "IP_DO_SEU_COMPUTADOR"
+```
+
 ---
 
 ## 2.  Mensageria e Comunicação (MQTT)
