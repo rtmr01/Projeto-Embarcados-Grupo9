@@ -178,6 +178,20 @@ void publishMqtt(const char* estado, float pressaoV, float pressaoMedia, float p
   }
 }
 
+/* ================== TASKS (FreeRTOS) ================== */
+void mqttTask(void *pvParameters) {
+  for (;;) {
+    if (WiFi.status() == WL_CONNECTED) {
+      if (!mqttClient.connected()) {
+        reconnectMQTT();
+      }
+      mqttClient.loop();
+    }
+    // Libera a CPU (Yield) para o FreeRTOS processar as tarefas de background do WiFi
+    vTaskDelay(pdMS_TO_TICKS(50));
+  }
+}
+
 /* ================== SETUP ================== */
 
 void setup() {
@@ -212,18 +226,23 @@ void setup() {
 
   setupWiFi();
   mqttClient.setServer(MQTT_SERVER, MQTT_PORT);
+
+  /* ===== FREERTOS TASKS ===== */
+  // Cria a task de rede (MQTT/WiFi) rodando no Core 0, separada do loop principal (Core 1)
+  xTaskCreatePinnedToCore(
+    mqttTask,       // Função que implementa a task
+    "Task_MQTT",    // Nome da Task
+    4096,           // Tamanho da stack em bytes
+    NULL,           // Parâmetros passados para a task
+    1,              // Prioridade
+    NULL,           // Handle
+    0               // Pino no Core 0 (WiFi no ESP32 roda melhor no Core 0)
+  );
 }
 
 /* ================== LOOP ================== */
 
 void loop() {
-  if (WiFi.status() == WL_CONNECTED) {
-    if (!mqttClient.connected()) {
-      reconnectMQTT();
-    }
-    mqttClient.loop();
-  }
-
   unsigned long agora = millis();
 
   float pressaoV = lerPressaoV();
