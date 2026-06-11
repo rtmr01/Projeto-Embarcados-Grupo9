@@ -51,6 +51,8 @@ O sistema roda de forma 100% local com latência mínima utilizando containers g
 
 - **Eclipse Mosquitto (Broker MQTT):** Recebe publicações (TCP porta `1883`) e as distribui. Usa a porta `9001` para WebSockets, permitindo conexão direta dos navegadores web.
 - **Node-RED:** Acessível na porta `1880`. Ambiente visual inscrito no MQTT para depuração de pacotes e criação de futuras automações (integração com bancos de dados, envio de e-mails, etc).
+  
+<img width="468" height="136" alt="Captura de Tela 2026-06-11 às 18 44 09" src="https://github.com/user-attachments/assets/cfbd7033-440e-45d2-ae57-882339619a02" />
 
 ---
 
@@ -64,6 +66,8 @@ Painel desenvolvido do zero para monitoramento por operadores, focado em clareza
   - Estética baseada em *Glassmorphism* e Dark Mode.
   - Placa fixa para leitura isolada do valor da voltagem atual do sensor.
   - Gráfico dinâmico construído com **Chart.js**, plotando a Pressão no Eixo Y em função do tempo no Eixo X, de forma contínua e em tempo real.
+  <img width="1470" height="956" alt="Captura de Tela 2026-06-11 às 18 43 38" src="https://github.com/user-attachments/assets/73d2d51c-c305-43bc-98ed-82547968c84f" />
+
  
   ## 5.  Imagens do protótipo físico
   
@@ -71,9 +75,9 @@ Painel desenvolvido do zero para monitoramento por operadores, focado em clareza
 <img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/834cb2cd-8527-4693-a82b-915e5a73bd7f" />
 <img width="1600" height="1200" alt="image" src="https://github.com/user-attachments/assets/24e03324-e211-40c1-9953-756fb1af6e52" />
 <img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/3b147bb1-6e11-4f4a-be9e-a43514ca0d5b" />
-<img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/5a93ccf5-66bf-4c2a-9c54-36947d75f0f0" />
 <img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/ea3bee1b-3fad-4be8-8566-014ed5fa2755" />
 <img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/9d19d644-72cf-4d7f-a380-1aef0db15a05" />
+<img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/64c98728-006a-47c5-ad4d-0c4533b5ef5e" />
 
 
 
